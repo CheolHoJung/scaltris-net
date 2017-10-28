@@ -1,5 +1,6 @@
 /.classpath
 /.cache-main
 target
+bin
 .settings/
 .cache-tests

@@ -7,7 +7,7 @@ import scala.util.Random
 /**
  * @author CheolHoJung
  * @date 2017-10-23
- * Block types and related information.
+ * This object is Enumeration associated with Block types and related information.
  */
 object Block extends Enumeration {
   type Block = Value
@@ -17,13 +17,12 @@ object Block extends Enumeration {
   val BlockSize = 31
   
   /**
-   * create next block
-    * @return a random type block that is not empty
+    * Create a random block that is not empty
     */
   def nextBlock: Block = Block.apply(Random.nextInt(Block.values.size - 1))
   
   /**
-    * @return a color of block
+    * Return color of block
     */
   def getBlockColor(block: Block): Color = block match {
     case T     => Color.red
@@ -37,7 +36,7 @@ object Block extends Enumeration {
   }
 
   /**
-    * @return Positions correct by each type and orientation
+    * Return positions correct by each type
     */
   def getPositions(block: Block): Array[Array[Tuple2[Int, Int]]] = block match {
     case T => Array(Array((0, 0), (1, 0), (-1, 0), (0, -1)),
