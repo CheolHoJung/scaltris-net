@@ -11,7 +11,7 @@ class BlockTest_ extends FlatSpec with Matchers {
 		Block.getBlockColor(Block.T) shouldBe a [Color]
 	}
 	
-	"nextBlock" should "return a random element in Block.values that not Block.EMPTY." in {
+	"nextBlock" should "return a random element in Block.values that not Block.EMPTY" in {
 		for(i <- 0 until 10) {
 			Block.values should not be (Block.EMPTY)
 			Block.values should contain (Block.nextBlock)

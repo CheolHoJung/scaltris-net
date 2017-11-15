@@ -9,9 +9,7 @@ class TetrominoTest_ extends FlatSpec with Matchers  {
       val tetromino = new Tetromino(block = Block.T)
     }
   
-  it should "have position" in {
-    val x = fixture.tetromino.position._1
-		val y = fixture.tetromino.position._2
+  it should "have four position" in {
     
     fixture.tetromino.getBlockPositions should have size (4)
   }
