@@ -13,7 +13,7 @@ class BoardTest_  extends FlatSpec with Matchers {
     fixture.board.board.flatten.forall(_.equals(Block.EMPTY)) should be (true)
   }
   
-  it should "can place a block" in {
+  it should "place a block" in {
       val t = new Tetromino(Block.T)
       val l = new Tetromino(Block.L)
       
@@ -36,5 +36,49 @@ class BoardTest_  extends FlatSpec with Matchers {
                 Array(Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.L, Block.L, Block.L, Block.EMPTY, Block.EMPTY, Block.EMPTY)
           )++ Array.fill[Array[Block.Value]](Board.Height-2)(Board.EmptyBoardRow)
       )
+  }
+  
+  it should "notice overlaps" in {
+    val l = new Tetromino(Block.L)
+    
+    fixture.board.overlap(l) should be (false)
+    fixture.board.withTetromino(l).overlap(l) should be (true)
+  }
+  
+  it should "notice illegal tetrominos" in {
+    val l = new Tetromino(Block.L)
+    
+    fixture.board.isLegal(l) should be (true)
+    fixture.board.withTetromino(l).isLegal(l) should be (false)
+    
+    fixture.board.isLegal(l.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft) should be (false)
+    fixture.board.isLegal(l.withMoveRight.withMoveRight.withMoveRight.withMoveRight.withMoveRight) should be (false)
+    fixture.board.isLegal(
+      l.withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+    ) should be (false)
+  }
+
+  it should "clear full rows with empty in board" in {
+    val board = new Board(
+      Array(
+        Array(Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.T, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY),
+        Array(Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.T, Block.T, Block.T, Block.EMPTY, Block.EMPTY, Block.EMPTY),
+        Board.EmptyBoardRow,
+        Array.fill[Block.Value](Board.Width)(Block.L),
+        Array.fill[Block.Value](Board.Width)(Block.O)) ++
+        Array.fill[Array[Block.Value]](Board.Height-5)(Board.EmptyBoardRow))
+
+    board.clearFullRows should be (2)
+
+    board.board should be (
+      Array.fill[Array[Block.Value]](2)(Board.EmptyBoardRow) ++
+      Array(
+         Array(Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.T, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY),
+         Array(Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.EMPTY, Block.T, Block.T, Block.T, Block.EMPTY, Block.EMPTY, Block.EMPTY)
+      ) ++ Array.fill[Array[Block.Value]](Board.Height-4)(Board.EmptyBoardRow))
   }
 }

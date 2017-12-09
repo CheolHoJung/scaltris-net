@@ -79,9 +79,9 @@ class Board(var board: Array[Array[Block.Value]]) {
     * Clear rows with all columns filled with blocks not empty.
     */
   def clearFullRows: Int = {
-    val nClearedBoard = board.filter(_.contains(Block.EMPTY))
-    val clearedRows = Board.Height - nClearedBoard.size
-    board = Array.fill[Array[Block.Value]](clearedRows)(Board.EmptyBoardRow) ++ nClearedBoard
+    val clearedBoard = board.filter(_.contains(Block.EMPTY))
+    val clearedRows = Board.Height - clearedBoard.size
+    board = Array.fill[Array[Block.Value]](clearedRows)(Board.EmptyBoardRow) ++ clearedBoard
     clearedRows
   }
   
