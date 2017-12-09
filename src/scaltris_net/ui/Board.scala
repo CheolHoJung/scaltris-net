@@ -15,6 +15,13 @@ object Board {
   def emptyBoard: Array[Array[Block.Value]] = {
     Array.fill[Array[Block.Value]](Height)(EmptyBoardRow)
   }
+  
+  def main(args: Array[String]): Unit = {
+    val b = new Board
+    val l = new Tetromino(Block.L)
+    println(b.overlap(l))
+    println(b.withTetromino(l).overlap(l))
+  }
 }
 
 /**
@@ -51,7 +58,7 @@ class Board(var board: Array[Array[Block.Value]]) {
   def overlap(tetromino: Tetromino): Boolean = {
     val positions = tetromino.getBlockPositions
     !positions.forall {
-      position => board(position._1)(position._2).equals(Block.EMPTY)
+      position => board(position._2)(position._1).equals(Block.EMPTY)
     }
   }
 
