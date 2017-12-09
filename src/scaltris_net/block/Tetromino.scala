@@ -1,12 +1,14 @@
 package scaltris_net.block
 
+import scaltris_net.ui.Board
+
 /**
  * @author CheolHoJung
  * @date 2017-10-24
  * This class is associated with moving based on actual positions and orientation.
  */
 class Tetromino(val block: Block.Value,
-                val position: Tuple2[Int, Int] = (5, 1), 
+                val position: Tuple2[Int, Int] = (Board.Width / 2, 1), 
                 val orientation: Int = 0) {
   
   /**

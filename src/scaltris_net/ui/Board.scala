@@ -37,7 +37,9 @@ class Board(var board: Array[Array[Block.Value]]) {
     val positions = tetromino.getBlockPositions
     
     positions.foreach {
-      position => boardCopy.board(position._1)(position._2) = tetromino.block
+      position =>  {
+        boardCopy.board(position._2)(position._1) = tetromino.block
+      }
     }
     
     boardCopy

@@ -9,10 +9,18 @@ class TetrominoTest_ extends FlatSpec with Matchers  {
       val tetromino = new Tetromino(block = Block.T)
     }
   
+  it should "have one block" in {
+    for (i <- 0 until 10) {
+      val block = new Tetromino().block
+      Block.values should contain (block)
+    }
+  }
+  
   it should "have four position" in {
     
     fixture.tetromino.getBlockPositions should have size (4)
   }
+  
   
   "withMoveLeft" should "return copied Tetromino with position.x decreased by 1 " in {
     val origin = fixture.tetromino
