@@ -58,12 +58,15 @@ class TetrominoTest_ extends FlatSpec with Matchers  {
 	  copedWithYic1.position should equal (withDown.position)
   }
   
-  "copy" should "copy tetromino`s all attributes" in {
+  "withRotation" should "return copied Tetromino with rotated orientation value" in {
     val origin = fixture.tetromino
-    val copiedByOrigin = origin.copy()
-    
-    copiedByOrigin.block should equal (origin.block)
-    copiedByOrigin.position should equal (origin.position)
-    copiedByOrigin.orientation should equal (origin.orientation)
+	  val copedWithOrientMod = origin.copy(orientation = origin.orientation + 1 % Block.getPositions(origin.block).size)
+	  val withRotation = fixture.tetromino.withRotation
+	  
+	  withRotation.position should equal (origin.position)
+	  withRotation.block should equal (origin.block)
+	  withRotation.orientation should not equal (origin.orientation)
+	  
+	  copedWithOrientMod.orientation should equal (withRotation.orientation)
   }
 }
