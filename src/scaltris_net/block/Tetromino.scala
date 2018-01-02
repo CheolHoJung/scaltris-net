@@ -52,7 +52,6 @@ class Tetromino(val block: Block.Value,
     */
   def copy(block: Block.Value = block,
            position: Tuple2[Int, Int] = position,
-           orientation: Int = orientation): Tetromino = new Tetromino(block, 
-     position, 
-     orientation)
+           orientation: Int = orientation): Tetromino = 
+     new Tetromino(block, position, orientation)
 }

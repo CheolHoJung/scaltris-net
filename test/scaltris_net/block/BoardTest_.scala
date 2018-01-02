@@ -45,22 +45,22 @@ class BoardTest_  extends FlatSpec with Matchers {
     fixture.board.withTetromino(l).overlap(l) should be (true)
   }
   
-  it should "notice illegal tetrominos" in {
-    val l = new Tetromino(Block.L)
-    
-    fixture.board.isLegal(l) should be (true)
-    fixture.board.withTetromino(l).isLegal(l) should be (false)
-    
-    fixture.board.isLegal(l.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft) should be (false)
-    fixture.board.isLegal(l.withMoveRight.withMoveRight.withMoveRight.withMoveRight.withMoveRight) should be (false)
-    fixture.board.isLegal(
-      l.withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
-        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
-        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
-        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
-        .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
-    ) should be (false)
-  }
+it should "notice illegal tetrominos" in {
+  val l = new Tetromino(Block.L)
+  
+  fixture.board.isLegal(l) should be (true)
+  fixture.board.withTetromino(l).isLegal(l) should be (false)
+  
+  fixture.board.isLegal(l.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft.withMoveLeft) should be (false)
+  fixture.board.isLegal(l.withMoveRight.withMoveRight.withMoveRight.withMoveRight.withMoveRight) should be (false)
+  fixture.board.isLegal(
+    l.withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+      .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+      .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+      .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+      .withMoveDown.withMoveDown.withMoveDown.withMoveDown.withMoveDown
+  ) should be (false)
+}
 
   it should "clear full rows with empty in board" in {
     val board = new Board(
