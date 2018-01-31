@@ -9,6 +9,11 @@ import scala.swing.Reactor
 import scala.swing.event.KeyPressed
 import scala.swing.event.Key
 
+/**
+ * @author CheolHoJung
+ * @date 2017-01-31
+ * This class work to game progress
+ */
 class BoardController(val parent: TetrisPanel) extends Reactor {
    
   var board = new Board
@@ -24,13 +29,22 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
   
   def repaint = parent.repaint
   
+  /**
+   * get interval seconds to game speed and set score
+   */
   def getTickInterval(score: Int) = StartTickInterval / (Math.sqrt(score/5).toInt + 1)
   
+  /**
+   * set game score
+   */
   def setScore(newScore: Int): Unit = {
     score = newScore
     tetrisTick.setDelay(getTickInterval(score))
   }
   
+  /**
+   * change the current tetromino to a tetromino of argument
+   */
   def tryMove(tetromino: Tetromino): Unit = {
     if (!gameRunning) return
     if (board.isLegal(tetromino)) {
@@ -39,6 +53,9 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
     repaint
   }
   
+  /**
+   * get moving the current tetromino to bottom
+   */
   def droppedTetromino: Tetromino = {
     var tetromino = currentTetromino
     while (board.isLegal(tetromino.withMoveDown)) {
@@ -47,12 +64,19 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
     tetromino
   }
   
+  /**
+   * move the current tetromino to bottom
+   */
   def dropTetromino: Unit = {
     if (!gameRunning) return
     currentTetromino = droppedTetromino
     placeTetromino
   }
   
+  /**
+   * repaint score and put the current tetromino on board.
+   * change the current tetromino and create a next tetromino.
+   */
   def placeTetromino: Unit = {
     board = board.withTetromino(currentTetromino)
     setScore(score + board.clearFullRows)
@@ -60,16 +84,25 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
     nextTetromino = new Tetromino
   }
   
+  /**
+   * pause a game
+   */
   def pauseGame: Unit = {
     gameRunning = false
     tetrisTick.stop
   }
   
+  /**
+   * resume a game
+   */
   def resumeGame: Unit = {
     gameRunning = true
     tetrisTick.start
   }
   
+  /**
+   * start a new game
+   */
   def newGame: Unit = {
     board = new Board
     setScore(0)
@@ -79,6 +112,9 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
     resumeGame
   }
   
+  /**
+   * switch between pausing and resuming
+   */
   def togglePause: Unit = {
     if (gameRunning) {
       pauseGame
