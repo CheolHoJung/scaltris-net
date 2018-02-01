@@ -3,6 +3,7 @@ package scaltris_net.block
 import java.awt.Color
 
 import scala.util.Random
+import java.awt.image.BufferedImage
 
 /**
  * @author CheolHoJung
@@ -35,6 +36,14 @@ object Block extends Enumeration {
     case EMPTY => Color.black
   }
 
+  def getBlockImage(block: Block): BufferedImage = {
+    val img = new BufferedImage(BlockSize, BlockSize, BufferedImage.TYPE_INT_ARGB)
+    val graphics = img.createGraphics()
+    graphics.setPaint(getBlockColor(block))
+    graphics.fillRect(0, 0, img.getWidth, img.getHeight)
+    img
+  }
+  
   /**
     * Return positions correct by each type
     */
