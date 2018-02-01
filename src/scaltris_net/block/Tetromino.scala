@@ -30,7 +30,7 @@ class Tetromino(val block: Block.Value,
   /**
     * Copy tetromino with block rotate
     */
-  def withRotation: Tetromino = copy(orientation = orientation + 1 % Block.getPositions(block).size)
+  def withRotation: Tetromino = copy(orientation = (orientation + 1) % Block.getPositions(block).size)
     
   /**
     * Copy tetromino move to left
