@@ -15,13 +15,6 @@ object Board {
   def emptyBoard: Array[Array[Block.Value]] = {
     Array.fill[Array[Block.Value]](Height)(EmptyBoardRow)
   }
-  
-  def main(args: Array[String]): Unit = {
-    val b = new Board
-    val l = new Tetromino(Block.L)
-    println(b.overlap(l))
-    println(b.withTetromino(l).overlap(l))
-  }
 }
 
 /**
@@ -44,9 +37,7 @@ class Board(var board: Array[Array[Block.Value]]) {
     val positions = tetromino.getBlockPositions
     
     positions.foreach {
-      position =>  {
-        boardCopy.board(position._2)(position._1) = tetromino.block
-      }
+      position => boardCopy.board(position._2)(position._1) = tetromino.block
     }
     
     boardCopy

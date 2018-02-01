@@ -48,7 +48,7 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
   def tryMove(tetromino: Tetromino): Unit = {
     if (!gameRunning) return
     if (board.isLegal(tetromino)) {
-      currentTetromino = nextTetromino
+      currentTetromino = tetromino
     }
     repaint
   }
@@ -59,7 +59,7 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
   def droppedTetromino: Tetromino = {
     var tetromino = currentTetromino
     while (board.isLegal(tetromino.withMoveDown)) {
-      tetromino.withMoveDown
+      tetromino = tetromino.withMoveDown
     }
     tetromino
   }
@@ -126,8 +126,9 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
   val gameLoop = new ActionListener {
     override def actionPerformed(e: ActionEvent) {
       val newTetromino = currentTetromino.withMoveDown
+      
       if (board.isLegal(newTetromino)) {
-        currentTetromino = nextTetromino
+        currentTetromino = newTetromino
       } else {
         placeTetromino
         if (!board.isLegal(currentTetromino)) {
@@ -135,9 +136,9 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
           pauseGame
         }
       }
+      repaint
     }
   }
-  
   
   reactions += {
     case KeyPressed(_, Key.Down, _, _) => tryMove(currentTetromino.withMoveDown)
@@ -154,6 +155,7 @@ class BoardController(val parent: TetrisPanel) extends Reactor {
     
     case KeyPressed(_, Key.N, _, _) => newGame
   }
+  
   val tetrisTick: Timer = new Timer(getTickInterval(score), gameLoop)
   tetrisTick.start
 }
