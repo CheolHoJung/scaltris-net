@@ -19,16 +19,20 @@ object Scaltris extends SimpleSwingApplication {
                      |N: New game""".stripMargin
                      
     def showHelp: Unit = {
+      boardPanel.controller.pauseGame
       Dialog.showMessage(boardPanel, helpText, "Scaltris-net help", Dialog.Message.Plain)
+      boardPanel.controller.resumeGame
     }
     
-    menuBar = new MenuBar {
+    menuBar_=(new MenuBar {
       contents += new Menu("Game") {
+        contents += new MenuItem(Action("New game") { boardPanel.controller.newGame })
+        contents += new MenuItem(Action("Pause") { boardPanel.controller.togglePause })
         contents += new MenuItem(Action("Help") { showHelp })
         contents += new Separator
         contents += new MenuItem(Action("Exit") { sys.exit(0) })
       }
-    }
+    })
     
     pack
     
