@@ -9,6 +9,7 @@ class BlockTest_ extends FlatSpec with Matchers {
 	it should "have color" in {
 		Block.getBlockColor(Block.T) should not equal (null)
 		Block.getBlockColor(Block.T) shouldBe a [Color]
+		Block.getBlockImage(Block.T).getGraphics.getColor shouldBe a [Color]
 	}
 	
 	"nextBlock" should "return a random element in Block.values that not Block.EMPTY" in {
